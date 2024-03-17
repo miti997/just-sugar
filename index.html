@@ -10,19 +10,6 @@
 <body>
     <script type="module" src="just_sugar.js"></script>
     <div id="APP"></div>
-    <script>
-        document.addEventListener('click', function (e) {
-            if (e.target.matches('[js-click]')) {
-                e.preventDefault();
-                let id = e.target.parentElement.id
-
-                let sc = __JUST_SUGAR__.components[id];
-
-                sc.increment()
-                console.log(__JUST_SUGAR__)
-            }
-        })
-    </script>
 </body>
 
 </html>

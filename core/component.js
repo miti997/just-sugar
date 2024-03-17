@@ -1,10 +1,10 @@
 export default class Component {
     id;
-    components = {};
+    components = [];
 
-    constructor(parent) {
+    constructor() {
         this.generateId()
-        parent.components[this.id] = new Proxy(this, {
+        __JUST_SUGAR__.components[this.id] = new Proxy(this, {
             set(obj, prop, value) {
                 obj[prop] = value;
 
@@ -49,12 +49,19 @@ export default class Component {
     }
 
     rerender() {
+        this.components.forEach(element => {
+            delete __JUST_SUGAR__.components[element];
+        });
+
+        this.components = [];
         let wrapper = document.querySelector(`#${this.id}`);
-        console.log(wrapper);
-        wrapper.innerHTML = this.template()
+        wrapper.innerHTML = this.template();
     }
 
-    jsClick(callBack) {
-        return `js-click="${callBack}"`;
+    loadComponent(component, parameters = [])
+    {
+        component = new component()
+        this.components.push(component.id)
+        return component.render();
     }
 }

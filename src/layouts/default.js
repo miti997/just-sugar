@@ -5,9 +5,9 @@ import Footer from "/src/components/default/footer.js";
 export default class DefaultLayout extends Layout {
     async render() {
         return /*html*/ `
-            ${new Header(this).render()}
+            ${this.loadComponent(Header)}
             ${await this.loadView('home')}
-            ${new Footer(this).render()}
+            ${this.loadComponent(Footer)}
         `;
     }
 }

@@ -5,4 +5,3 @@ import Layout from '/core/layout.js'
 
 window.__JUST_SUGAR__ = new APP()
 await __JUST_SUGAR__.init()
-console.log(__JUST_SUGAR__)

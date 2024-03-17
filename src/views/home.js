@@ -22,18 +22,13 @@ export default class Home extends View {
                 `)
             }
 
-            <a href="" js-click='increment'>Clikc here</a>
+            <a href="" just-click="increment">Clikc here</a>
             <div>counter ${this.counter}</div>
-            ${new TestComponent().render()}
+            ${this.loadComponent(TestComponent)}
         `;
     }
 
     increment() {
         this.counter++;
-    }
-
-    changes()
-    {
-        console.log('test')
     }
 }
