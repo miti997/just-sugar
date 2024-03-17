@@ -5,11 +5,15 @@ export default class Home extends View {
     counter = 0;
     param = 5;
 
-    multiple = [1, 2];
+    name = '';
+
+    multiple = {
+        wow: 'wow',
+        nah: 'nah'
+    };
 
     template() {
         return /*html*/`
-            Home
             ${
                 this.if(this.param > 0, /*html*/`
                     <div>Value ${this.param}</div>
@@ -17,14 +21,17 @@ export default class Home extends View {
             }
 
             ${
-                this.for(this.multiple, (result) => /*html*/`
-                    <div>Multiple ${result}</div>
+                this.for(this.multiple, (result, test) =>/*html*/`
+                    <div>Multiple ${result} - ${test}</div>
                 `)
             }
 
-            <a href="" just-click="increment">Clikc here</a>
+            <a href="" ${this.on('click', 'increment')}>Clikc here</a>
             <div>counter ${this.counter}</div>
             ${this.loadComponent(TestComponent)}
+
+            <input ${this.bind('name')}>
+            <div>Your name: ${this.name}</div>
         `;
     }
 

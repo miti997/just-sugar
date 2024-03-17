@@ -24,15 +24,44 @@ export default class APP {
     addEventListeners() {
         this.wrapper.addEventListener('click', (e) => {
             if (e.target.matches('[just-click]')) {
-                e.preventDefault();
+                this.basicEventSettings(e)
                 let elem = e.target;
-                this.callFunction(elem.getAttribute('just-click'), elem.parentElement.id);
+                this.callFunction(
+                    elem.getAttribute('just-click'),
+                    elem.parentElement.id
+                );
+            }
+        })
+
+        this.wrapper.addEventListener('input', (e) => {
+            if (e.target.matches('[just-bind]')) {
+                this.basicEventSettings(e)
+                let elem = e.target;
+                let parent =  elem.parentElement;
+                let identifier = elem.getAttribute('cube-identifier');
+                this.setProperty(
+                    elem.getAttribute('just-bind'),
+                    parent.id,
+                    elem.value
+                );
+
+                elem = parent.querySelector(`[cube-identifier="${identifier}"]`);
+                elem.selectionStart = elem.selectionEnd = elem.value.length;
+                elem.focus()
             }
         })
     }
 
-    callFunction(functionName, id)
-    {
+    callFunction(functionName, id) {
         this.components[id][functionName]();
+    }
+
+    setProperty(propertyName, id, value) {
+        this.components[id][propertyName] = value
+    }
+
+    basicEventSettings(e) {
+        e.preventDefault();
+        e.stopPropagation();
     }
 }
