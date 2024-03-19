@@ -3,8 +3,9 @@ export default class APP {
         wrapperSelector: '#APP'
     };
     wrapper;
-
     components = {};
+    layout;
+    view;
 
     constructor(config = {}) {
         if (Object.keys(config).length > 0) {
@@ -27,6 +28,7 @@ export default class APP {
                 this.basicEventSettings(e)
                 let elem = e.target;
                 this.callFunction(
+                    elem.getAttribute('cube-type'),
                     elem.getAttribute('just-click'),
                     elem.parentElement.id
                 );
@@ -39,7 +41,9 @@ export default class APP {
                 let elem = e.target;
                 let parent =  elem.parentElement;
                 let identifier = elem.getAttribute('cube-identifier');
+
                 this.setProperty(
+                    elem.getAttribute('cube-type'),
                     elem.getAttribute('just-bind'),
                     parent.id,
                     elem.value
@@ -52,12 +56,48 @@ export default class APP {
         })
     }
 
-    callFunction(functionName, id) {
+    callFunction(type, functionName, id) {
+        if (type === 'layout') {
+            this.callFunctionLayout(functionName);
+        } else if (type === 'view') {
+            this.callFunctionView(functionName);
+        } else {
+            this.callFunctionComponent(functionName, id);
+        }
+    }
+
+    callFunctionLayout(functionName) {
+        this.layout[functionName]();
+    }
+
+    callFunctionView(functionName) {
+        this.view[functionName]();
+    }
+
+    callFunctionComponent(functionName, id) {
         this.components[id][functionName]();
     }
 
-    setProperty(propertyName, id, value) {
-        this.components[id][propertyName] = value
+    setProperty(type, propertyName, id, value) {
+        if (type === 'layout') {
+            this.setPropertyLayout(propertyName, value);
+        } else if (type === 'view') {
+            this.setPropertyView(propertyName, value);
+        } else {
+            this.setPropertyComponent(propertyName, id, value);
+        }
+    }
+
+    setPropertyLayout(propertyName, value) {
+        this.layout[propertyName] = value;
+    }
+
+    setPropertyView(propertyName, value) {
+        this.view[propertyName] = value;
+    }
+
+    setPropertyComponent(propertyName, id, value) {
+        this.components[id][propertyName] = value;
     }
 
     basicEventSettings(e) {

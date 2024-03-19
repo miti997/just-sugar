@@ -1,4 +1,5 @@
 import APP from '/core/app.js'
+import SugarCube from '/core/sugar_cube.js'
 import View from '/core/view.js'
 import Component from '/core/component.js'
 import Layout from '/core/layout.js'
