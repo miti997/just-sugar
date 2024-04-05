@@ -1,26 +1,118 @@
 export default class Router {
-    routes = {};
-    currentRoute = null;
+    layout = null;
+    scope = null;
+    response = {
+        layout: null,
+        view: null,
+        params: {}
+    }
 
-    addRoute(route, settings = null) {
-        this.currentRoute = route;
+    constructor() {
+        this.root = this.newNormalNode();
+    }
 
-        if (settings !== null) {
-            this.routes[route] = settings;
-            return;
+    addScope(scope, layout) {
+        this.layout = layout;
+        this.scope = scope;
+    }
+
+    addRoute(route, view = null, options = {}) {
+        route = this.scope + route
+        let node = this.root;
+        let parts = route.split('/').filter(part => part !== '');
+        if (route === '/' || route === '//') {
+            parts = ['/'];
         }
 
-        this.routes[route] = {};
-        return this;
+        for (let part in parts) {
+            part = parts[part];
+
+            if (part.startsWith('{') && part.endsWith('}')) {
+                part = part.replace(/{|}/g, "");
+                if (!node.paramNodes[part]) {
+                    node.paramNodes[part] = this.newParamNode();
+                }
+                node = node.paramNodes[part];
+
+                if (!options[part]) {
+                    node.regex = '.*';
+                } else {
+                    node.regex = options[part];
+                }
+            } else {
+                if (!node.normalNodes[part]) {
+                    node.normalNodes[part] = this.newNormalNode();
+                }
+                node = node.normalNodes[part];
+            }
+
+            node.view = view;
+            node.layout = this.layout;
+        }
     }
 
-    layout(layout) {
-        this.routes[this.currentRoute].layout = layout;
-        return this;
+    newNormalNode() {
+        return {
+            normalNodes: {},
+            paramNodes: {},
+            layout: null,
+            view: null
+        }
     }
 
-    view(view) {
-        this.routes[this.currentRoute].view = view;
-        return this;
+    newParamNode() {
+        return {
+            normalNodes: {},
+            regex: null,
+            paramNodes: {},
+            matches: function(part) {
+                return this.regex.test(part)
+            },
+            layout: null,
+            view: null
+        }
+    }
+
+    matchRoute() {
+        let parts = window.location.pathname.split('/').filter(part => part !== '');
+        let node = this.root;
+
+        if (window.location.pathname === '/') {
+            parts = ['/']
+        }
+
+        let partsCount = parts.length;
+
+        let foundCount = 0;
+
+        for (let part in parts) {
+            part = parts[part];
+            if (!node.normalNodes[part]) {
+                let keys =  Object.keys(node.paramNodes);
+                for (let key in keys) {
+                    key = keys[key];
+                    let regex = new RegExp(node.paramNodes[key].regex)
+
+                    if (!regex.test(part)) {
+                        continue;
+                    }
+                    foundCount++;
+                    node = node.paramNodes[key];
+                    this.response.params[key] = part;
+                }
+            } else {
+                node = node.normalNodes[part];
+                foundCount++;
+            }
+        }
+
+        if (partsCount > foundCount) {
+            console.log('bad')
+        } else {
+            this.response.layout = node.layout;
+            this.response.view = node.view;
+
+            return this.response;
+        }
     }
 }

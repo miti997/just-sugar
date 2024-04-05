@@ -6,7 +6,9 @@ import Layout from '/core/layout.js'
 import Router from '/core/router.js'
 import routes from '/src/config/routes.js'
 
-console.log(routes)
+// console.log(routes)
 
-window.__JUST_SUGAR__ = new APP()
+window.__JUST_SUGAR__ = new APP(routes)
 await __JUST_SUGAR__.init()
+
+console.log(__JUST_SUGAR__);

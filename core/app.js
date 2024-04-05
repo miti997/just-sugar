@@ -7,19 +7,27 @@ export default class APP {
     layout;
     view;
 
-    constructor(config = {}) {
+    layoutName = null;
+    viewName = null;
+
+    constructor(routes, config = {}) {
         if (Object.keys(config).length > 0) {
             this.config = config;
         }
+
+        let matchedRoute = routes.matchRoute();
+
+        this.layoutName = matchedRoute.layout;
+        this.viewName = matchedRoute.view;
     }
 
     async init() {
-        let module = await import('/src/layouts/default.js');
+        let module = await import(`/src/layouts/${this.layoutName}.js`);
 
         this.wrapper = document.querySelector(this.config.wrapperSelector);
-        this.wrapper.innerHTML = await new module.default().render();
+        this.wrapper.innerHTML = await new module.default().render(this.viewName);
 
-        this.addEventListeners()
+        this.addEventListeners();
     }
 
     addEventListeners() {
