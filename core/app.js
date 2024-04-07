@@ -1,111 +1,116 @@
 export default class APP {
-    config = {
-        wrapperSelector: '#APP'
-    };
+    config = {wrapperSelector: '#APP', events: ['click', 'change']};
     wrapper;
     components = {};
     layout;
     view;
+    layoutName;
+    viewName;
+    routes;
 
-    layoutName = null;
-    viewName = null;
-
-    constructor(routes, config = {}) {
+    constructor(routes, config = null) {
+        this.routes = routes;
+        if (config === null) {
+            return;
+        }
         if (Object.keys(config).length > 0) {
             this.config = config;
         }
-
-        let matchedRoute = routes.matchRoute();
-
-        this.layoutName = matchedRoute.layout;
-        this.viewName = matchedRoute.view;
     }
 
     async init() {
-        let module = await import(`/src/layouts/${this.layoutName}.js`);
-
-        this.wrapper = document.querySelector(this.config.wrapperSelector);
-        this.wrapper.innerHTML = await new module.default().render(this.viewName);
-
+        await this.matchRoute();
         this.addEventListeners();
     }
 
-    addEventListeners() {
-        this.wrapper.addEventListener('click', (e) => {
-            if (e.target.matches('[just-click]')) {
-                this.basicEventSettings(e)
-                let elem = e.target;
-                this.callFunction(
-                    elem.getAttribute('cube-type'),
-                    elem.getAttribute('just-click'),
-                    elem.parentElement.id
-                );
+    async matchRoute() {
+        let matchedRoute = this.routes.matchRoute();
+        try {
+            if (this.layoutName !== matchedRoute.layout) {
+                this.layoutName = matchedRoute.layout;
+                this.viewName = matchedRoute.view;
+                await this.renderLayout();
+            } else if (this.layoutName === matchedRoute.layout && this.viewName !== matchedRoute.view) {
+                this.viewName = matchedRoute.view;
+                this.layout.viewName = this.viewName;
+            } else if (this.layoutName === matchedRoute.layout && this.viewName === matchedRoute.view) {
+                this.view.render();
             }
-        })
+        } catch {
+            this.layoutName = 'error';
+            this.viewName = '404';
+            await this.renderNotFoundError();
+        }
 
+    }
+
+    async renderLayout() {
+        let module = await import(`/src/layouts/${this.layoutName}.js`);
+        this.wrapper = document.querySelector(this.config.wrapperSelector);
+        this.wrapper.innerHTML = await new module.default().render(this.viewName);
+    }
+
+    async renderNotFoundError() {
+        let module = await import(`/src/layouts/error.js`);
+        this.wrapper = document.querySelector(this.config.wrapperSelector);
+        this.wrapper.innerHTML = await new module.default().render('404');
+    }
+
+    addEventListeners() {
+        window.addEventListener('popstate', () => {
+            this.matchRoute()
+        })
+        for (let event of this.config.events) {
+            const modifiedEvent = `just-${event}`;
+            this.wrapper.addEventListener(event, (e) => {
+                if (e.target.matches(`[${modifiedEvent}]`)) {
+                    this.basicEventSettings(e);
+                    let elem = e.target;
+                    this.callFunction(
+                        elem.getAttribute('cube-type'),
+                        elem.getAttribute(modifiedEvent),
+                        elem.parentElement.id
+                    );
+                }
+            });
+        }
         this.wrapper.addEventListener('input', (e) => {
             if (e.target.matches('[just-bind]')) {
                 this.basicEventSettings(e)
                 let elem = e.target;
                 let parent =  elem.parentElement;
                 let identifier = elem.getAttribute('cube-identifier');
-
                 this.setProperty(
                     elem.getAttribute('cube-type'),
                     elem.getAttribute('just-bind'),
                     parent.id,
                     elem.value
                 );
-
                 elem = parent.querySelector(`[cube-identifier="${identifier}"]`);
                 elem.selectionStart = elem.selectionEnd = elem.value.length;
                 elem.focus()
             }
-        })
+        });
     }
 
     callFunction(type, functionName, id) {
         if (type === 'layout') {
-            this.callFunctionLayout(functionName);
+            this.layout[functionName]();
         } else if (type === 'view') {
-            this.callFunctionView(functionName);
+            this.view[functionName]();
         } else {
-            this.callFunctionComponent(functionName, id);
+            this.components[id][functionName]();
         }
-    }
-
-    callFunctionLayout(functionName) {
-        this.layout[functionName]();
-    }
-
-    callFunctionView(functionName) {
-        this.view[functionName]();
-    }
-
-    callFunctionComponent(functionName, id) {
-        this.components[id][functionName]();
     }
 
     setProperty(type, propertyName, id, value) {
         if (type === 'layout') {
-            this.setPropertyLayout(propertyName, value);
+            this.layout[propertyName] = value;
         } else if (type === 'view') {
-            this.setPropertyView(propertyName, value);
+            this.view[propertyName] = value;
         } else {
-            this.setPropertyComponent(propertyName, id, value);
+            this.components[id][propertyName] = value;
         }
-    }
-
-    setPropertyLayout(propertyName, value) {
-        this.layout[propertyName] = value;
-    }
-
-    setPropertyView(propertyName, value) {
-        this.view[propertyName] = value;
-    }
-
-    setPropertyComponent(propertyName, id, value) {
-        this.components[id][propertyName] = value;
     }
 
     basicEventSettings(e) {

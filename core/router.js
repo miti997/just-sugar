@@ -23,17 +23,14 @@ export default class Router {
         if (route === '/' || route === '//') {
             parts = ['/'];
         }
-
         for (let part in parts) {
             part = parts[part];
-
             if (part.startsWith('{') && part.endsWith('}')) {
                 part = part.replace(/{|}/g, "");
                 if (!node.paramNodes[part]) {
                     node.paramNodes[part] = this.newParamNode();
                 }
                 node = node.paramNodes[part];
-
                 if (!options[part]) {
                     node.regex = '.*';
                 } else {
@@ -45,7 +42,6 @@ export default class Router {
                 }
                 node = node.normalNodes[part];
             }
-
             node.view = view;
             node.layout = this.layout;
         }
@@ -65,9 +61,6 @@ export default class Router {
             normalNodes: {},
             regex: null,
             paramNodes: {},
-            matches: function(part) {
-                return this.regex.test(part)
-            },
             layout: null,
             view: null
         }
@@ -76,15 +69,11 @@ export default class Router {
     matchRoute() {
         let parts = window.location.pathname.split('/').filter(part => part !== '');
         let node = this.root;
-
         if (window.location.pathname === '/') {
-            parts = ['/']
+            parts = ['/'];
         }
-
         let partsCount = parts.length;
-
         let foundCount = 0;
-
         for (let part in parts) {
             part = parts[part];
             if (!node.normalNodes[part]) {
@@ -92,7 +81,6 @@ export default class Router {
                 for (let key in keys) {
                     key = keys[key];
                     let regex = new RegExp(node.paramNodes[key].regex)
-
                     if (!regex.test(part)) {
                         continue;
                     }
@@ -105,14 +93,13 @@ export default class Router {
                 foundCount++;
             }
         }
-
         if (partsCount > foundCount) {
-            console.log('bad')
+            this.response.layout = 'error';
+            this.response.view = '404'
         } else {
             this.response.layout = node.layout;
             this.response.view = node.view;
-
-            return this.response;
         }
+        return this.response;
     }
 }

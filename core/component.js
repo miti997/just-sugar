@@ -12,7 +12,6 @@ export default class Component extends SugarCube {
         this.components.forEach(element => {
             delete __JUST_SUGAR__.components[element];
         });
-
         this.components = [];
         let wrapper = document.querySelector(`#${this.id}`);
         wrapper.innerHTML = this.template();
