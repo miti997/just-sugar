@@ -1,11 +1,7 @@
 export default class Router {
     layout = null;
     scope = null;
-    response = {
-        layout: null,
-        view: null,
-        params: {}
-    }
+    response = {layout: null,view: null,params: []}
 
     constructor() {
         this.root = this.newNormalNode();
@@ -86,7 +82,7 @@ export default class Router {
                     }
                     foundCount++;
                     node = node.paramNodes[key];
-                    this.response.params[key] = part;
+                    this.response.params.push(part);
                 }
             } else {
                 node = node.normalNodes[part];

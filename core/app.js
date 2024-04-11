@@ -6,6 +6,7 @@ export default class APP {
     view;
     layoutName;
     viewName;
+    viewParams;
     routes;
 
     constructor(routes, config = null) {
@@ -25,6 +26,8 @@ export default class APP {
 
     async matchRoute() {
         let matchedRoute = this.routes.matchRoute();
+
+        this.viewParams = matchedRoute.params;
         try {
             if (this.layoutName !== matchedRoute.layout) {
                 this.layoutName = matchedRoute.layout;

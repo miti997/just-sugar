@@ -14,7 +14,7 @@ export default class Layout extends SugarCube {
         this.viewName = viewName;
         return /*html*/`
             <div id="${this.id}_view">
-                ${new module.default().render()}
+                ${new module.default(...__JUST_SUGAR__.viewParams).render()}
             </div>
         `;
     }
