@@ -1,6 +1,6 @@
 import Layout from "/core/layout.js";
 
-export default class DefaultLayout extends Layout {
+export default class DefaultErrorLayout extends Layout {
     async render(error) {
         return /*html*/ `
             <div>

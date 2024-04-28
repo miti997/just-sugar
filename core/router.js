@@ -30,7 +30,7 @@ export default class Router {
                 if (!options[part]) {
                     node.regex = '.*';
                 } else {
-                    node.regex = options[part];
+                    node.regex = `^${options[part]}$`;
                 }
             } else {
                 if (!node.normalNodes[part]) {
@@ -90,8 +90,9 @@ export default class Router {
             }
         }
         if (partsCount > foundCount) {
-            this.response.layout = 'error';
-            this.response.view = '404'
+            this.response.layout = 'errors/error';
+            this.response.view = 'no_matched_route';
+            this.response.params = [window.location.pathname];
         } else {
             this.response.layout = node.layout;
             this.response.view = node.view;

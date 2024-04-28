@@ -7,7 +7,7 @@ export default class Test extends View {
         this.id = id;
     }
     template() {
-        throw 'test';
+    //    this.throwError('view_not_found', 'id');
         return /*html*/`
             <div>The id is: ${this.id}</div>
         `;

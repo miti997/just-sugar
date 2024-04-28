@@ -1,5 +1,4 @@
 export default class SugarCube {
-    id;
     eventCounter = 0;
     components = [];
     constructor() {
@@ -7,9 +6,7 @@ export default class SugarCube {
     }
 
     render() {
-        return /*html*/`
-            <div id=${this.id}>${this.template()}</div>
-        `;
+        return /*html*/`<div id=${this.id}>${this.template()}</div>`;
     }
 
     if (condition, html) {
@@ -72,5 +69,10 @@ export default class SugarCube {
                 return true
             },
         })
+    }
+
+    throwError(error, message = null, layout = null)
+    {
+        __JUST_SUGAR__.throwError(error, message, layout);
     }
 }

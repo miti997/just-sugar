@@ -25,9 +25,7 @@ export default class Layout extends SugarCube {
             let module = await import(`/src/views/${this.viewName}.js`);
             wrapper.innerHTML = new module.default(...__JUST_SUGAR__.viewParams).render();
         } catch (error) {
-            __JUST_SUGAR__.layoutName = 'error'
-            __JUST_SUGAR__.viewName = 'not_found';
-            await __JUST_SUGAR__.renderLayout()
+           this.throwError('view_not_found', this.viewName);
         }
     }
 }
