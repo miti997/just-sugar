@@ -10,13 +10,13 @@ export default class Layout extends SugarCube {
     }
 
     async loadView(viewName) {
-        let module = await import(`/src/views/${viewName}.js`);
-        this.viewName = viewName;
-        return /*html*/`
-            <div id="${this.id}_view">
-                ${new module.default(...__JUST_SUGAR__.viewParams).render()}
-            </div>
-        `;
+        try {
+            let module = await import(`/src/views/${viewName}.js`);
+            this.viewName = viewName;
+            return /*html*/`<div id="${this.id}_view">${new module.default(...__JUST_SUGAR__.viewParams).render()}</div>`;
+        }catch {
+            this.throwError('view_not_found', this.viewName);
+        }
     }
 
     async rerender() {
@@ -25,7 +25,7 @@ export default class Layout extends SugarCube {
             let module = await import(`/src/views/${this.viewName}.js`);
             wrapper.innerHTML = new module.default(...__JUST_SUGAR__.viewParams).render();
         } catch (error) {
-           this.throwError('view_not_found', this.viewName);
+            this.throwError('view_not_found', this.viewName);
         }
     }
 }

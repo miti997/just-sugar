@@ -9,9 +9,7 @@ export default class Component extends SugarCube {
 
     rerender() {
         this.eventCounter = 0;
-        this.components.forEach(element => {
-            delete __JUST_SUGAR__.components[element];
-        });
+        this.components.forEach(element => {delete __JUST_SUGAR__.components[element]});
         this.components = [];
         let wrapper = document.querySelector(`#${this.id}`);
         wrapper.innerHTML = this.template();
