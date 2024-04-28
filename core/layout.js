@@ -20,8 +20,14 @@ export default class Layout extends SugarCube {
     }
 
     async rerender() {
-        let wrapper = document.querySelector(`#${this.id}_view`);
-        let module = await import(`/src/views/${this.viewName}.js`);
-        wrapper.innerHTML = new module.default().render();
+        try {
+            let wrapper = document.querySelector(`#${this.id}_view`);
+            let module = await import(`/src/views/${this.viewName}.js`);
+            wrapper.innerHTML = new module.default(...__JUST_SUGAR__.viewParams).render();
+        } catch (error) {
+            __JUST_SUGAR__.layoutName = 'error'
+            __JUST_SUGAR__.viewName = 'not_found';
+            await __JUST_SUGAR__.renderLayout()
+        }
     }
 }

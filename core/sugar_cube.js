@@ -47,6 +47,7 @@ export default class SugarCube {
     }
 
     on(event, callback) {
+        __JUST_SUGAR__.addNewEventListener(event);
         this.eventCounter++;
         return `just-${event}="${callback}" cube-identifier="${this.id}__${this.eventCounter}" cube-type="${this.type}"`;
     }
@@ -67,7 +68,6 @@ export default class SugarCube {
         return new Proxy(this, {
             set(obj, prop, value) {
                 obj[prop] = value;
-
                 obj.rerender()
                 return true
             },

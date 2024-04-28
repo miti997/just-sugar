@@ -1,5 +1,6 @@
 export default class APP {
-    config = {wrapperSelector: '#APP', events: ['click', 'change']};
+    config = {wrapperSelector: '#APP'};
+    eventListeners = {};
     wrapper;
     components = {};
     layout;
@@ -41,10 +42,9 @@ export default class APP {
             }
         } catch {
             this.layoutName = 'error';
-            this.viewName = '404';
-            await this.renderNotFoundError();
+            this.viewName = 'not_found';
+            await this.renderLayout();
         }
-
     }
 
     async renderLayout() {
@@ -53,17 +53,8 @@ export default class APP {
         this.wrapper.innerHTML = await new module.default().render(this.viewName);
     }
 
-    async renderNotFoundError() {
-        let module = await import(`/src/layouts/error.js`);
-        this.wrapper = document.querySelector(this.config.wrapperSelector);
-        this.wrapper.innerHTML = await new module.default().render('404');
-    }
-
-    addEventListeners() {
-        window.addEventListener('popstate', () => {
-            this.matchRoute()
-        })
-        for (let event of this.config.events) {
+    addNewEventListener(event) {
+        if (this.eventListeners[event] === undefined) {
             const modifiedEvent = `just-${event}`;
             this.wrapper.addEventListener(event, (e) => {
                 if (e.target.matches(`[${modifiedEvent}]`)) {
@@ -76,7 +67,14 @@ export default class APP {
                     );
                 }
             });
+            this.eventListeners[event] = true;
         }
+    }
+
+    addEventListeners() {
+        window.addEventListener('popstate', () => {
+            this.matchRoute()
+        })
         this.wrapper.addEventListener('input', (e) => {
             if (e.target.matches('[just-bind]')) {
                 this.basicEventSettings(e)

@@ -5,7 +5,7 @@ const router = new Router();
 router.addScope('/', 'default')
 router.addRoute('/', 'home')
 router.addRoute('/test', 'test')
-router.addRoute('/{id}', 'id')
+router.addRoute('/{id}', 'id', {'id': '\\d+'})
 
 router.addScope('/owner', 'owner')
 router.addRoute('/', 'owner home')
