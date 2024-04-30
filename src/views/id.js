@@ -1,15 +1,23 @@
 import View from '/core/view.js';
 
 export default class Test extends View {
-    id;
+    ID;
     constructor(id) {
         super();
-        this.id = id;
+        this.ID = id;
     }
+
+    style() {
+        return /*css*/`
+            .red {
+                color: red
+            }
+        `;
+    }
+
     template() {
-    //    this.throwError('view_not_found', 'id');
         return /*html*/`
-            <div>The id is: ${this.id}</div>
+            <div class="red">The id is: ${this.ID}</div>
         `;
     }
 }

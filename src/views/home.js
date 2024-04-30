@@ -10,6 +10,14 @@ export default class Home extends View {
         nah: 'nah'
     };
 
+    style() {
+        return /*css*/`
+            .red {
+                color: red
+            }
+        `;
+    }
+
     template() {
         return /*html*/`
             ${
@@ -24,9 +32,9 @@ export default class Home extends View {
                 `)
             }
 
-            <a href="" ${this.on('click', 'increment')}>Clikc here</a>
+            <a ${this.on('click', 'increment')}>Clikc here</a>
 
-            <div>counter ${this.counter}</div>
+            <div class="red">counter ${this.counter}</div>
             ${this.loadComponent(TestComponent)}
 
             <input ${this.bind('name')}>

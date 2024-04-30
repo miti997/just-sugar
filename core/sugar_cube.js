@@ -6,7 +6,15 @@ export default class SugarCube {
     }
 
     render() {
-        return /*html*/`<div id=${this.id}>${this.template()}</div>`;
+        return /*html*/`<div id=${this.id}>${this.addCss()}${this.template()}</div>`;
+    }
+
+    addCss() {
+        if (typeof this.style === "function") {
+            return /*html*/ `<style>#${this.id} {${this.style()}}</style>`;
+        }
+
+        return '';
     }
 
     if (condition, html) {

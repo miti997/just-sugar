@@ -13,7 +13,7 @@ export default class View extends SugarCube {
         delete __JUST_SUGAR__.view;
         this.components = [];
         let wrapper = document.querySelector(`#${this.id}`);
-        wrapper.innerHTML = this.template();
+        wrapper.innerHTML = this.addCss() + this.template();
         __JUST_SUGAR__.view = this.makeProxy();
     }
 }
