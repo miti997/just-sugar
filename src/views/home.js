@@ -32,19 +32,20 @@ export default class Home extends View {
                 `)
             }
 
-            <a ${this.on('click', 'increment')}>Clikc here</a>
+            <div><a ${this.on('click', 'increment')}>Increment</a></div>
+            <div><a ${this.on('click', 'decrement')}>Decrement</a></div>
 
             <div class="red">counter ${this.counter}</div>
             ${this.loadComponent(TestComponent, ['change'])}
 
-            ${this.loadComponent(TestComponent, ['target'])}
-
-            <input ${this.bind('name')}>
-            <div>Your name: ${this.name}</div>
-        `;
+            ${this.loadComponent(TestComponent, ['target'])}        `;
     }
 
     increment() {
         this.counter++;
+    }
+
+    decrement() {
+        this.counter--;
     }
 }

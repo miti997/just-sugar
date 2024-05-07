@@ -1,6 +1,7 @@
 export default class APP {
     eventListeners = {};
     components = {};
+    error = false;
 
     constructor(routes, config = {wrapperSelector: '#APP'}) {
         this.routes = routes;
@@ -15,15 +16,14 @@ export default class APP {
             if (e.target.matches('[just-bind]')) {
                 this.basicEventSettings(e)
                 let elem = e.target;
-                let parent =  elem.parentElement;
-                let identifier = elem.getAttribute('cube-identifier');
+                let parent = document.querySelector(`#${elem.getAttribute('parent-cube')}`);
                 this.setProperty(
                     elem.getAttribute('cube-type'),
                     elem.getAttribute('just-bind'),
                     parent.id,
                     elem.value
                 );
-                elem = parent.querySelector(`[cube-identifier="${identifier}"]`);
+                elem = parent.querySelector(`[cube-event="${elem.getAttribute('cube-event')}"]`);
                 elem.selectionStart = elem.selectionEnd = elem.value.length;
                 elem.focus()
             }
@@ -70,7 +70,7 @@ export default class APP {
                     this.callFunction(
                         elem.getAttribute('cube-type'),
                         elem.getAttribute(modifiedEvent),
-                        elem.parentElement.id
+                        elem.getAttribute("parent-cube")
                     );
                 }
             });
@@ -104,12 +104,16 @@ export default class APP {
     }
 
     throwError(error, message = null, layout = null) {
+        if (this.error === true) {
+            return;
+        }
+        this.error = true;
         if (layout === null) {
             layout = 'errors/error';
         }
         __JUST_SUGAR__.layoutName = layout
         __JUST_SUGAR__.viewName = error;
         __JUST_SUGAR__.viewParams = [message];
-        __JUST_SUGAR__.renderLayout()
+        __JUST_SUGAR__.renderLayout();
     }
 }

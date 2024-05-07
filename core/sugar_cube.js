@@ -6,10 +6,6 @@ export default class SugarCube {
             this.generateId();
         } else {
             this.id = `sc_${id}`;
-            let duplicateIds = document.querySelectorAll(`#sc_${this.id}`);
-            if (duplicateIds.length > 0) {
-                this.id = `sc_${id}_${duplicateIds.length + 1}`;
-            }
         }
     }
 
@@ -62,18 +58,22 @@ export default class SugarCube {
     on(event, callback) {
         __JUST_SUGAR__.addNewEventListener(event);
         this.eventCounter++;
-        return `just-${event}="${callback}" cube-identifier="${this.id}__${this.eventCounter}" cube-type="${this.type}"`;
+        return `just-${event}="${callback}" parent-cube="${this.id}" cube-event="${this.eventCounter}" cube-type="${this.type}"`;
     }
 
     bind(property) {
         this.eventCounter++;
-        return `value="${this[property]}" just-bind="${property}" cube-identifier="${this.id}__${this.eventCounter}" cube-type="${this.type}"`
+        return `value="${this[property]}" just-bind="${property}"  parent-cube="${this.id}" cube-event="${this.eventCounter}" cube-type="${this.type}"`
     }
 
     loadComponent(component, parameters = [])
     {
-        component = new component(...parameters)
-        this.components.push(component.id)
+        try {
+            component = new component(...parameters);
+        } catch (error) {
+            this.throwError('component_not_found', component.name);
+        }
+        this.components.push(component.id);
         return component.render();
     }
 
