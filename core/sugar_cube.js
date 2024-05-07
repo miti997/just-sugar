@@ -1,8 +1,16 @@
 export default class SugarCube {
     eventCounter = 0;
     components = [];
-    constructor() {
-        this.generateId();
+    constructor(id = null) {
+        if (id === null) {
+            this.generateId();
+        } else {
+            this.id = `sc_${id}`;
+            let duplicateIds = document.querySelectorAll(`#sc_${this.id}`);
+            if (duplicateIds.length > 0) {
+                this.id = `sc_${id}_${duplicateIds.length + 1}`;
+            }
+        }
     }
 
     render() {
@@ -82,5 +90,12 @@ export default class SugarCube {
     throwError(error, message = null, layout = null)
     {
         __JUST_SUGAR__.throwError(error, message, layout);
+    }
+
+    updateComponent(id, properties) {
+        let target = __JUST_SUGAR__.components[`sc_${id}`];
+        for (let property in properties) {
+            target[property] = properties[property];
+        }
     }
 }

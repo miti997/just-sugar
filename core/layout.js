@@ -14,7 +14,7 @@ export default class Layout extends SugarCube {
             let module = await import(`/src/views/${viewName}.js`);
             this.viewName = viewName;
             return /*html*/`<div id="${this.id}_view">${new module.default(...__JUST_SUGAR__.viewParams).render()}</div>`;
-        }catch {
+        } catch {
             this.throwError('view_not_found', this.viewName);
         }
     }

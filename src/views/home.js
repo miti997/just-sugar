@@ -35,7 +35,9 @@ export default class Home extends View {
             <a ${this.on('click', 'increment')}>Clikc here</a>
 
             <div class="red">counter ${this.counter}</div>
-            ${this.loadComponent(TestComponent)}
+            ${this.loadComponent(TestComponent, ['change'])}
+
+            ${this.loadComponent(TestComponent, ['target'])}
 
             <input ${this.bind('name')}>
             <div>Your name: ${this.name}</div>

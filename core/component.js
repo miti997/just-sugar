@@ -2,8 +2,8 @@ import SugarCube from "./sugar_cube.js";
 export default class Component extends SugarCube {
     type = 'component';
 
-    constructor() {
-        super();
+    constructor(id = null) {
+        super(id);
         __JUST_SUGAR__.components[this.id] = this.makeProxy();
     }
 
