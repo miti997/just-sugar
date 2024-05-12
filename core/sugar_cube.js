@@ -98,4 +98,8 @@ export default class SugarCube {
             target[property] = properties[property];
         }
     }
+
+    style(styleName) {
+        return /*html*/`<link rel="stylesheet" href="/resources/css/${styleName}.css">`;
+    }
 }

@@ -16,6 +16,8 @@ const server = http.createServer((req, res) => {
         contentType = 'text/css';
     } else if (extname === '.js') {
         contentType = 'text/javascript';
+    } else if (extname === '.svg') {
+        contentType = 'image/svg+xml';
     }
 
     fs.readFile(filePath, (err, content) => {

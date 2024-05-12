@@ -1,0 +1,10 @@
+:root {
+    --blue: hsl (240, 1, 0);
+    --red: hsl (0, 1, 0);
+    --black: hsl (0, 0%, 0%);
+    background-color: hsl(54, 40%, 80%);
+    color: var(--black);
+}
+
+
+

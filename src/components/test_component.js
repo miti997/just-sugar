@@ -15,7 +15,6 @@ export default class TestComponent extends Component {
             </div>
             <input ${this.bind('name')}>
             <div>Your name: ${this.name}</div>
-
         `
     }
 

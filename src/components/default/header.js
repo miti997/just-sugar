@@ -1,5 +1,5 @@
 import Component from "/core/component.js";
-import Link from '/src/components/link.js';
+import Link from '/src/components/spa_link.js';
 
 export default class Header extends Component {
     template() {

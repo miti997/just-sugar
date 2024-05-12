@@ -20,6 +20,7 @@ export default class Home extends View {
 
     template() {
         return /*html*/`
+            <img src="/resources/img/just_sugar.svg" alt="" width="300" height="300">
             ${
                 this.if(this.param > 0, /*html*/`
                     <div>Value ${this.param}</div>
@@ -38,7 +39,8 @@ export default class Home extends View {
             <div class="red">counter ${this.counter}</div>
             ${this.loadComponent(TestComponent, ['change'])}
 
-            ${this.loadComponent(TestComponent, ['target'])}        `;
+            ${this.loadComponent(TestComponent, ['target'])}
+        `;
     }
 
     increment() {
