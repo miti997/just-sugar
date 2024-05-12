@@ -1,11 +1,12 @@
 import Component from "../../core/component.js";
 
-export default class SpaLinkComponent extends Component {
+export default class LinkComponent extends Component {
     link;
     text;
     options;
+    wrapperElement = "div";
 
-    constructor(link, text, options= {}) {
+    constructor(link, text, options = {}) {
         super();
         this.link = link;
         this.text = text;
@@ -30,12 +31,7 @@ export default class SpaLinkComponent extends Component {
 
     template() {
         return /*html*/`
-            <a href="${this.link}" ${this.on('click', 'changeUrl')}>${this.text}</a>
+            <a href="${this.link}" ${this.for(this.options, (attr, val) => `${attr}="${val}"`)}>${this.text}</a>
         `
-    }
-
-    async changeUrl() {
-        history.pushState({}, "", this.link);
-        await __JUST_SUGAR__.matchRoute()
     }
 }

@@ -1,6 +1,7 @@
 import SugarCube from './sugar_cube.js';
 export default class View extends SugarCube {
     type = 'view';
+    wrapperElement = 'section';
 
     constructor() {
         super();

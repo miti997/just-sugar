@@ -2,15 +2,15 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="80mm"
-   height="80mm"
-   viewBox="0 0 80 80"
+   width="58.537922mm"
+   height="63.731747mm"
+   viewBox="0 0 58.537922 63.731747"
    version="1.1"
    id="svg5"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    sodipodi:docname="just_sugar_logo.svg"
    xml:space="preserve"
-   inkscape:export-filename="just_sugar_logo_f_1.svg"
+   inkscape:export-filename="just_sugar_logo_f_2.svg"
    inkscape:export-xdpi="12.095238"
    inkscape:export-ydpi="12.095238"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -28,8 +28,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.76880612"
-     inkscape:cx="-203.56238"
-     inkscape:cy="372.00536"
+     inkscape:cx="187.95376"
+     inkscape:cy="297.86443"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="-8"
@@ -87,7 +87,8 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:none"><g
+     style="display:none"
+     transform="translate(-13.23104,-4.6926413)"><g
        id="g48424"
        transform="matrix(0.64671477,0,0,0.64671477,-22.340577,8.6454194)"
        style="display:none"><path
@@ -108,9 +109,10 @@
          inkscape:original-d="M 112.88375,99.30816 112.67004,64.86905 M 82.738036,47.83457 112.67004,64.86905 M 142.38832,47.464405 112.67004,64.86905 m 29.932,17.03447 -29.71829,17.40464 -29.932004,-17.03447 -0.21371,-34.439118 29.718284,-17.404638 29.932,17.034473 z" /></g></g><g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Layer 2"><g
+     inkscape:label="Layer 2"
+     transform="translate(-13.23104,-4.6926413)"><g
        id="g310"
-       transform="matrix(0.57641926,0,0,0.57642302,-23.477795,-8.7408071)"><path
+       transform="matrix(0.57641926,0,0,0.57642302,-20.977795,-12.18229)"><path
          id="path304"
          style="fill:#ffffff;stroke:#aa1717;stroke-width:2;stroke-dasharray:none;stroke-opacity:1"
          d="M 90.496421,125.20851 90.282706,90.769399 M 60.350704,73.734926 90.282706,90.769399 M 120.00099,73.364761 90.282706,90.769399 M 120.21471,107.80387 90.496421,125.20851 60.564419,108.17404 60.350704,73.734928 90.068992,56.33029 120.00099,73.364763 Z" /><path

@@ -1,6 +1,7 @@
 export default class SugarCube {
     eventCounter = 0;
     components = [];
+    wrapperElement = 'div'
     constructor(id = null) {
         if (id === null) {
             this.generateId();
@@ -10,7 +11,7 @@ export default class SugarCube {
     }
 
     render() {
-        return /*html*/`<div id=${this.id}>${this.addCss()}${this.template()}</div>`;
+        return /*html*/`<${this.wrapperElement} id=${this.id}>${this.addCss()}${this.template()}</${this.wrapperElement}>`;
     }
 
     addCss() {
@@ -66,7 +67,7 @@ export default class SugarCube {
         return `value="${this[property]}" just-bind="${property}"  parent-cube="${this.id}" cube-event="${this.eventCounter}" cube-type="${this.type}"`
     }
 
-    loadComponent(component, parameters = [])
+    loadComponent(component, ...parameters)
     {
         try {
             component = new component(...parameters);
@@ -99,7 +100,7 @@ export default class SugarCube {
         }
     }
 
-    style(styleName) {
+    loadStyle(styleName) {
         return /*html*/`<link rel="stylesheet" href="/resources/css/${styleName}.css">`;
     }
 }

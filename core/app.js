@@ -47,6 +47,7 @@ export default class APP {
 
     async renderLayout() {
         let module = null
+        console.log(this.viewName)
         try {
             module = await import(`/src/layouts/${this.layoutName}.js`);
         } catch {

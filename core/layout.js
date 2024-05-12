@@ -9,11 +9,11 @@ export default class Layout extends SugarCube {
         __JUST_SUGAR__.layout = this.makeProxy();
     }
 
-    async loadView(viewName) {
+    async loadView(viewName, wrapper = 'div') {
         try {
             let module = await import(`/src/views/${viewName}.js`);
             this.viewName = viewName;
-            return /*html*/`<div id="${this.id}_view">${new module.default(...__JUST_SUGAR__.viewParams).render()}</div>`;
+            return /*html*/`<${wrapper} id="${this.id}_view">${new module.default(...__JUST_SUGAR__.viewParams).render()}</${wrapper}>`;
         } catch {
             this.throwError('view_not_found', this.viewName);
         }

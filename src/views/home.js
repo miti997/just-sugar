@@ -1,45 +1,31 @@
 import View from '/core/view.js';
-import TestComponent from '/src/components/test_component.js';
+import Img from '/src/components/img.js';
 
 export default class Home extends View {
-    counter = 0;
-    param = 5;
-    name = '';
-    multiple = {
-        wow: 'wow',
-        nah: 'nah'
-    };
-
     style() {
         return /*css*/`
-            .red {
-                color: red
+            width: 100%;
+            height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            h1 {
+                margin: 0;
+                font-size: 2rem;
             }
-        `;
+        `
     }
 
     template() {
         return /*html*/`
-            <img src="/resources/img/just_sugar.svg" alt="" width="300" height="300">
-            ${
-                this.if(this.param > 0, /*html*/`
-                    <div>Value ${this.param}</div>
-                `)
-            }
-
-            ${
-                this.for(this.multiple, (result, test) =>/*html*/`
-                    <div>Multiple ${result} - ${test}</div>
-                `)
-            }
-
-            <div><a ${this.on('click', 'increment')}>Increment</a></div>
-            <div><a ${this.on('click', 'decrement')}>Decrement</a></div>
-
-            <div class="red">counter ${this.counter}</div>
-            ${this.loadComponent(TestComponent, ['change'])}
-
-            ${this.loadComponent(TestComponent, ['target'])}
+            ${this.loadComponent(Img, 'just_sugar.svg', {alt: 'Just sugar logo', width:500, height:500})}
+            <div>
+                <h1>
+                    Simple and sweet
+                </h1>
+            </div>
         `;
     }
 
