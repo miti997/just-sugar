@@ -31,12 +31,4 @@ export default class Home extends View {
             </div>
         `;
     }
-
-    increment() {
-        this.counter++;
-    }
-
-    decrement() {
-        this.counter--;
-    }
 }
