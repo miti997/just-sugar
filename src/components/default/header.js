@@ -42,7 +42,7 @@ export default class Header extends Component {
                     ${this.loadComponent(Img, 'just_sugar_logo.svg', {alt: 'Just sugar logo', width:40, height:40})}
                 </div>
                 <ul>
-                    ${this.loadComponent(Link, 'https://github.com/miti997/just-sugar', 'Read the docs', {wrapperElement: 'li', target: '_blank'})}
+                    ${this.loadComponent(Link, 'https://github.com/miti997/just-sugar-documentation', 'Read the docs', {wrapperElement: 'li', target: '_blank'})}
                     ${this.loadComponent(Link, 'https://github.com/miti997/just-sugar', 'Check the project', {wrapperElement: 'li', target: '_blank'})}
                 </ul>
             </nav>
