@@ -23,9 +23,11 @@ export default class SugarCube {
         return '';
     }
 
-    if (condition, html) {
+    if (condition, html, elseHtml = null) {
         if (condition) {
             return html;
+        } else if (elseHtml !== null) {
+            return elseHtml;
         }
 
         return '';
