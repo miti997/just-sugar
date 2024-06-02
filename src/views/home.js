@@ -1,5 +1,6 @@
 import View from '/core/view.js';
 import Img from '/src/components/img.js';
+import SpaLink from '/src/components/spa_link.js'
 
 export default class Home extends View {
     style() {

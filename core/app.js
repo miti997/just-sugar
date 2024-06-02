@@ -2,6 +2,7 @@ export default class APP {
     eventListeners = {};
     components = {};
     error = false;
+    errorDetails = null;
 
     constructor(routes, config = {wrapperSelector: '#APP'}) {
         this.routes = routes;
@@ -33,6 +34,7 @@ export default class APP {
     async matchRoute() {
         let matchedRoute = this.routes.matchRoute();
         this.viewParams = matchedRoute.params;
+        this.errorDetails = matchedRoute.errorDetails;
         if (this.layoutName !== matchedRoute.layout) {
             this.layoutName = matchedRoute.layout;
             this.viewName = matchedRoute.view;
@@ -47,17 +49,25 @@ export default class APP {
 
     async renderLayout() {
         let module = null
-        console.log(this.viewName)
         try {
             module = await import(`/src/layouts/${this.layoutName}.js`);
-        } catch {
-            this.throwError('layout_not_found', this.layoutName);
+        } catch(e) {
+            this.throwError('layout_not_loaded', e, this.layoutName);
             return;
         }
+
+        let layout = null;
+
         try {
-            this.wrapper.innerHTML = await new module.default().render(this.viewName);
-        } catch {
-            this.throwError('view_not_found', this.viewName);
+            layout = new module.default();
+        } catch(e) {
+            this.throwError('layout_not_loaded', e, this.layoutName);
+        }
+
+        try {
+            this.wrapper.innerHTML = `<style>${layout.style()}</style>${await layout.render(this.viewName)}`;
+        } catch(e) {
+            this.throwError('view_not_loaded', e, this.viewName);
         }
     }
 
@@ -71,7 +81,8 @@ export default class APP {
                     this.callFunction(
                         elem.getAttribute('cube-type'),
                         elem.getAttribute(modifiedEvent),
-                        elem.getAttribute("parent-cube")
+                        elem.getAttribute("parent-cube"),
+                        elem.getAttribute('just-params')
                     );
                 }
             });
@@ -79,13 +90,14 @@ export default class APP {
         }
     }
 
-    callFunction(type, functionName, id) {
+    callFunction(type, functionName, id, params) {
+        params = params.split(',')
         if (type === 'layout') {
-            this.layout[functionName]();
+            this.layout[functionName](...params);
         } else if (type === 'view') {
-            this.view[functionName]();
+            this.view[functionName](...params);
         } else {
-            this.components[id][functionName]();
+            this.components[id][functionName](...params);
         }
     }
 
@@ -104,7 +116,7 @@ export default class APP {
         e.stopPropagation();
     }
 
-    throwError(error, message = null, layout = null) {
+    throwError(error, errorDetails = null, message = null, layout = null) {
         if (this.error === true) {
             return;
         }
@@ -112,9 +124,11 @@ export default class APP {
         if (layout === null) {
             layout = 'errors/error';
         }
+
         __JUST_SUGAR__.layoutName = layout
         __JUST_SUGAR__.viewName = error;
         __JUST_SUGAR__.viewParams = [message];
+        __JUST_SUGAR__.errorDetails = errorDetails;
         __JUST_SUGAR__.renderLayout();
     }
 }

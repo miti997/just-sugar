@@ -3,7 +3,7 @@ export default class SugarCube {
     components = [];
     wrapperElement = 'div'
     constructor(id = null) {
-        if (id === null) {
+        if (id === null || id === '') {
             this.generateId();
         } else {
             this.id = `sc_${id}`;
@@ -11,14 +11,15 @@ export default class SugarCube {
     }
 
     render() {
-        return /*html*/`<${this.wrapperElement} id=${this.id}>${this.addCss()}${this.template()}</${this.wrapperElement}>`;
-    }
-
-    addCss() {
-        if (typeof this.style === "function") {
-            return /*html*/ `<style>#${this.id} {${this.style()}}</style>`;
+        let style = this.style()
+        if (style !== '') {
+            style = `<style>#${this.id} {${style}}</style>`
         }
 
+        return /*html*/`<${this.wrapperElement} id=${this.id}>${style}${this.template()}</${this.wrapperElement}>`;
+    }
+
+    style() {
         return '';
     }
 
@@ -56,10 +57,10 @@ export default class SugarCube {
         }
     }
 
-    on(event, callback) {
+    on(event, callback, parameters = []) {
         __JUST_SUGAR__.addNewEventListener(event);
         this.eventCounter++;
-        return `just-${event}="${callback}" parent-cube="${this.id}" cube-event="${this.eventCounter}" cube-type="${this.type}"`;
+        return `just-${event}="${callback}" just-params="${parameters}" parent-cube="${this.id}" cube-event="${this.eventCounter}" cube-type="${this.type}"`;
     }
 
     bind(property) {
@@ -71,8 +72,8 @@ export default class SugarCube {
     {
         try {
             component = new component(...parameters);
-        } catch (error) {
-            this.throwError('component_not_found', component.name);
+        } catch (e) {
+            this.throwError('component_not_loaded', e, component.name);
         }
         this.components.push(component.id);
         return component.render();

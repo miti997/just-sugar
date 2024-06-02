@@ -8,6 +8,9 @@ export default class LinkComponent extends Component {
 
     constructor(link, text, options = {}) {
         super();
+        if (!link || !text) {
+            this.throwError('component_not_loaded', "Make sure to specify a link and a text", 'Link');
+        }
         this.link = link;
         this.text = text;
         this.options = options;

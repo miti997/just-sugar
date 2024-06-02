@@ -6,7 +6,7 @@ export default class DefaultLayout extends Layout {
         return /*html*/ `
             ${this.loadStyle('just_sugar')}
             ${this.loadComponent(Header)}
-            ${await this.loadView(viewName, 'main')}
+            ${await this.loadView(viewName)}
         `;
     }
 }

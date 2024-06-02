@@ -93,6 +93,7 @@ export default class Router {
             this.response.layout = 'errors/error';
             this.response.view = 'no_matched_route';
             this.response.params = [window.location.pathname];
+            this.response.errorDetails = `No route could be matched. Make sure the route for ${window.location.pathname} exists`
         } else {
             this.response.layout = node.layout;
             this.response.view = node.view;

@@ -7,6 +7,9 @@ export default class SpaLinkComponent extends Component {
 
     constructor(link, text, options= {}) {
         super();
+        if (!link || !text) {
+            this.throwError('component_not_loaded', "Make sure to specify a link and a text", 'SpaLink');
+        }
         this.link = link;
         this.text = text;
         this.options = options;

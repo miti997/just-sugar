@@ -1,10 +1,10 @@
 import SugarCube from './sugar_cube.js';
 export default class View extends SugarCube {
     type = 'view';
-    wrapperElement = 'section';
+    wrapperElement = 'main';
 
     constructor() {
-        super();
+        super('view');
         delete __JUST_SUGAR__.view;
         __JUST_SUGAR__.view = this.makeProxy();
     }

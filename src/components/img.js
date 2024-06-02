@@ -6,6 +6,9 @@ export default class ImgComponent extends Component {
 
     constructor(imgName, options = {}) {
         super();
+        if (!imgName) {
+            this.throwError('component_not_loaded', "Make sure to specify an image path", 'Img');
+        }
         this.imgName = imgName;
         this.options = options;
         if (this.options.wrapperElement !== undefined) {
