@@ -11,7 +11,7 @@ export default class SugarCube {
     }
 
     render() {
-        let style = this.style()
+        let style = this.style();
         if (style !== '') {
             style = `<style>#${this.id} {${style}}</style>`
         }
