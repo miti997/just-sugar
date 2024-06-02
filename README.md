@@ -5,13 +5,13 @@
 Just Sugar is a sweet and simple vanila JS framework that can be used to create dynamic SPAs. Just Sugar doesn't require of it's users to learn specific and confusing syntaxes or patterns, using instead plain old JavaScript.
 
 ## How to use?
-### Clone or download this repository.
-### In your index file (or whatever other file you are using) inlcude the just_jugar.js configuration file.
+### 1. Clone or download this repository.
+### 2. In your index file (or whatever other file you are using) inlcude the just_jugar.js configuration file.
 ```
   <script type="module" src="/just_sugar.js"></script>
 ```
 
-### Configre the just_sugar.js file to your needs. Make sure you change the selector to match your app wrapper. If desired you can also create multiple such files and load them dinamycally.
+### 3. Configre the just_sugar.js file to your needs. Make sure you change the selector to match your app wrapper. If desired you can also create multiple such files and load them dinamycally.
 
    The app wrapper:
 ```
@@ -25,7 +25,7 @@ The just_sugar.js file
   await __JUST_SUGAR__.init()
 ```
 
-### Create your layouts and pages and have fun.
+### 4. Create your layouts and pages and have fun.
 
 
 ## Want to learn more? Go [here]()
