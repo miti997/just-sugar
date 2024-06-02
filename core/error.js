@@ -8,5 +8,6 @@ export default class Error extends SugarCube {
         super('error');
         this.message = message;
         __JUST_SUGAR__.view = this.makeProxy();
+        document.title = 'ERROR';
     }
 }

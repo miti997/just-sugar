@@ -7,6 +7,11 @@ export default class View extends SugarCube {
         super('view');
         delete __JUST_SUGAR__.view;
         __JUST_SUGAR__.view = this.makeProxy();
+        document.title = __JUST_SUGAR__.view.title()
+    }
+
+    title() {
+        return 'VIEW';
     }
 
     rerender() {
