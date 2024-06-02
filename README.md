@@ -28,4 +28,4 @@ The just_sugar.js file
 ### 4. Create your layouts and pages and have fun.
 
 
-## Want to learn more? Go [here]()
+## Want to learn more? Go [here](https://github.com/miti997/just-sugar-documentation)
