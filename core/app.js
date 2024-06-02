@@ -4,7 +4,7 @@ export default class APP {
     error = false;
     errorDetails = null;
 
-    constructor(routes, config = {wrapperSelector: '#APP'}) {
+    constructor(routes, config) {
         this.routes = routes;
         this.config = config;
         this.wrapper = document.querySelector(this.config.wrapperSelector);
@@ -33,6 +33,9 @@ export default class APP {
 
     async matchRoute() {
         let matchedRoute = this.routes.matchRoute();
+        if (matchedRoute === null) {
+            return;
+        }
         this.viewParams = matchedRoute.params;
         this.errorDetails = matchedRoute.errorDetails;
         if (this.layoutName !== matchedRoute.layout) {
@@ -94,7 +97,7 @@ export default class APP {
         params = params.split(',')
         if (type === 'layout') {
             this.layout[functionName](...params);
-        } else if (type === 'view') {
+        } else if (type === 'view' || type === 'error') {
             this.view[functionName](...params);
         } else {
             this.components[id][functionName](...params);
@@ -125,10 +128,20 @@ export default class APP {
             layout = 'errors/error';
         }
 
-        __JUST_SUGAR__.layoutName = layout
-        __JUST_SUGAR__.viewName = error;
-        __JUST_SUGAR__.viewParams = [message];
-        __JUST_SUGAR__.errorDetails = errorDetails;
-        __JUST_SUGAR__.renderLayout();
+        this.layoutName = layout
+        this.viewName = error;
+        this.viewParams = [message];
+        this.errorDetails = errorDetails;
+
+        if (this.config.devMode === false) {
+            this.layoutName = layout
+            this.viewName = 'generic_not_found';
+            this.viewParams = ['This page doesn\'t exist'];
+            this.renderLayout();
+            throw errorDetails
+        }
+
+
+        this.renderLayout();
     }
 }

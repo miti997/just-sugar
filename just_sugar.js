@@ -5,5 +5,5 @@ import Component from '/core/component.js'
 import Layout from '/core/layout.js'
 import Router from '/core/router.js'
 import routes from '/src/config/routes.js'
-window.__JUST_SUGAR__ = new APP(routes)
+window.__JUST_SUGAR__ = new APP(routes, {wrapperSelector: '#APP', devMode: false})
 await __JUST_SUGAR__.init()

@@ -90,10 +90,8 @@ export default class Router {
             }
         }
         if (partsCount > foundCount) {
-            this.response.layout = 'errors/error';
-            this.response.view = 'no_matched_route';
-            this.response.params = [window.location.pathname];
-            this.response.errorDetails = `No route could be matched. Make sure the route for ${window.location.pathname} exists`
+            __JUST_SUGAR__.throwError('no_matched_route', `No route could be matched. Make sure the route for ${window.location.pathname} exists`, window.location.pathname);
+            return null;
         } else {
             this.response.layout = node.layout;
             this.response.view = node.view;
