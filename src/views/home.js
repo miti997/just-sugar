@@ -11,7 +11,6 @@ export default class Home extends View {
             justify-content: center;
             align-items: center;
             flex-direction: column;
-
             h1 {
                 margin: 0;
                 font-size: 2rem;

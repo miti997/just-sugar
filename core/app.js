@@ -58,15 +58,12 @@ export default class APP {
             this.throwError('layout_not_loaded', e, this.layoutName);
             return;
         }
-
         let layout = null;
-
         try {
             layout = new module.default();
         } catch(e) {
             this.throwError('layout_not_loaded', e, this.layoutName);
         }
-
         try {
             this.wrapper.innerHTML = `<style>${layout.style()}</style>${await layout.render(this.viewName)}`;
         } catch(e) {
@@ -127,12 +124,10 @@ export default class APP {
         if (layout === null) {
             layout = 'errors/error';
         }
-
         this.layoutName = layout
         this.viewName = error;
         this.viewParams = [message];
         this.errorDetails = errorDetails;
-
         if (this.config.devMode === false) {
             this.layoutName = layout
             this.viewName = 'generic_not_found';
@@ -140,8 +135,6 @@ export default class APP {
             this.renderLayout();
             throw errorDetails
         }
-
-
         this.renderLayout();
     }
 }

@@ -24,7 +24,6 @@ export default class SpaLinkComponent extends Component {
                 color: inherit;
                 text-decoration: none;
             }
-
             a:hover {
                 color: var(--light-red)
             }
