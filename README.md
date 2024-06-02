@@ -2,7 +2,7 @@
   <img src="resources/img/just_sugar.svg" alt="Project Logo">
 </p
 
-Just Sugar is a sweet and simple vanila JS framework that can be used to create dynamic SPAs and interfaces. Just Sugar doesn't require of it's users to learn specific and confusing syntaxes or patterns, using instead plain old JavaScript.
+Just Sugar is a sweet and simple vanila JS framework that can be used to create dynamic SPAs and interfaces. Just Sugar doesn't require of it's users to learn specific and confusing syntaxes or patterns, using instead plain old JavaScript. All views, layouts and components are classes and their templates are created via template literals.
 
 ## How to use?
 ### 1. Clone or download this repository.
@@ -25,7 +25,7 @@ The just_sugar.js file
   await __JUST_SUGAR__.init()
 ```
 
-### 4. Create your layouts and pages and have fun.
-
+### 4. Run node server.js to start the built in server for Just sugar
+### 5. Create your layouts and pages and have fun.
 
 ## Want to learn more? Go [here](https://github.com/miti997/just-sugar-documentation)
