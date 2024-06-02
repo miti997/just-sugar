@@ -2,7 +2,7 @@
   <img src="resources/img/just_sugar.svg" alt="Project Logo">
 </p
 
-Just Sugar is a sweet and simple vanila JS framework that can be used to create dynamic SPAs. Just Sugar doesn't require of it's users to learn specific and confusing syntaxes or patterns, using instead plain old JavaScript.
+Just Sugar is a sweet and simple vanila JS framework that can be used to create dynamic SPAs and interfaces. Just Sugar doesn't require of it's users to learn specific and confusing syntaxes or patterns, using instead plain old JavaScript.
 
 ## How to use?
 ### 1. Clone or download this repository.
