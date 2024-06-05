@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
 </head>
-<script type="module" src="/just_sugar.js"></script>
+<script type="module">
+    import APP from "/core/app.js";
+    new APP(null, {wrapperSelector: '#APP', devMode: false, layout: "default", view: "home"})
+</script>
 <body id="APP"></body>
 </html>

@@ -4,15 +4,24 @@ export default class APP {
     error = false;
     errorDetails = null;
 
-    constructor(routes, config) {
+    constructor(routes = null, config) {
         this.routes = routes;
         this.config = config;
         this.wrapper = document.querySelector(this.config.wrapperSelector);
+        window.__JUST_SUGAR__ = this;
+        window.__JUST_SUGAR__.init();
     }
 
     async init() {
-        await this.matchRoute();
-        window.addEventListener('popstate', () => {this.matchRoute()});
+        if (this.routes !== null) {
+            await this.matchRoute();
+            window.addEventListener('popstate', () => {this.matchRoute()});
+        } else {
+            this.layoutName = this.config.layout;
+            this.viewName = this.config.view;
+            this.viewParams = this.config.viewParams ?? [];
+            await this.renderLayout();
+        }
         this.wrapper.addEventListener('input', (e) => {
             if (e.target.matches('[just-bind]')) {
                 this.basicEventSettings(e)

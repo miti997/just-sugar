@@ -6,26 +6,23 @@ Just Sugar is a sweet and simple vanila JS framework that can be used to create 
 
 ## How to use?
 ### 1. Clone or download this repository.
-### 2. In your index file (or whatever other file you are using) inlcude the just_jugar.js configuration file.
+### 2. Include the following script tag depending on whether or not you want to create a SPA in your HTML file:
+#### 2.1 SPA
 ```html
-  <script type="module" src="/just_sugar.js"></script>
+  <script type="module">
+    import APP from "/core/app.js";
+    import routes from "/src/config/routes.js"
+    new APP(routes, {wrapperSelector: '#APP', devMode: false})
+  </script>
 ```
-
-### 3. Configre the just_sugar.js file to your needs. Make sure you change the selector to match your app wrapper. If desired you can also create multiple such files and load them dinamycally.
-
-   The app wrapper:
+#### 2.2 Non SPA
 ```html
-  <body id="APP"></body>
+  <script type="module">
+    import APP from "/core/app.js";
+    new APP(null, {wrapperSelector: '#APP', devMode: false, layout: "default", view: "home"})
+  </script>
 ```
-The just_sugar.js file
-```javascript
-  import APP from '/core/app.js'
-  import routes from '/src/config/routes.js'
-  window.__JUST_SUGAR__ = new APP(routes, {wrapperSelector: '#APP', devMode: true})
-  await __JUST_SUGAR__.init()
-```
-
-### 4. Run node server.js to start the built in server for Just sugar
-### 5. Create your layouts and pages and have fun.
+### 3. Run node server.js to start the built in server for Just sugar
+### 4. Create your layouts and pages and have fun.
 
 ## Want to learn more? Go [here](https://github.com/miti997/just-sugar-documentation)
