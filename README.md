@@ -25,4 +25,4 @@ Just Sugar is a sweet and simple vanila JS framework that can be used to create 
 ### 3. Run node server.js to start the built in server for Just sugar
 ### 4. Create your layouts and pages and have fun.
 
-## Want to learn more? Go [here](https://github.com/miti997/just-sugar-documentation)
+## Want to learn more? Go [here](https://github.com/miti997/just-sugar-documentation) (WIP)
