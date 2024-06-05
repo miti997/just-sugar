@@ -12,14 +12,14 @@ Just Sugar is a sweet and simple vanila JS framework that can be used to create 
   <script type="module">
     import APP from "/core/app.js";
     import routes from "/src/config/routes.js"
-    new APP(routes, {wrapperSelector: '#APP', devMode: false})
+    new APP(routes, {wrapperSelector: '#APP', devMode: true})
   </script>
 ```
 #### 2.2 Non SPA
 ```html
   <script type="module">
     import APP from "/core/app.js";
-    new APP(null, {wrapperSelector: '#APP', devMode: false, layout: "default", view: "home"})
+    new APP(null, {wrapperSelector: '#APP', devMode: true, layout: "default", view: "home"})
   </script>
 ```
 ### 3. Run node server.js to start the built in server for Just sugar

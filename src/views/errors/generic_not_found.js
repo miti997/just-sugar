@@ -23,10 +23,16 @@ export default class ErrorGenericNotFound extends Error {
     }
     template() {
         return /*html*/`
-             <div class="container">
-                <h1>This page could not be found</h1>
-                <button ${this.on('click', 'goBack')}>Go Back</button>
-            </div>
+            ${this.if(
+                __JUST_SUGAR__.config.devMode,
+                `<div class="container">
+                    <h1>This page could not be found</h1>
+                    <button ${this.on('click', 'goBack')}>Go Back</button>
+                </div>`,
+                `<div class="container">
+                    <h1>Nothing to see here</h1>
+                </div>`
+            )}
         `;
     }
 
