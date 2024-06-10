@@ -19,7 +19,9 @@ export default class Router {
         if (route === '/' || route === '//') {
             parts = ['/'];
         }
+
         for (let part in parts) {
+            const partKey = part;
             part = parts[part];
             if (part.startsWith('{') && part.endsWith('}')) {
                 part = part.replace(/{|}/g, "");
@@ -40,6 +42,7 @@ export default class Router {
             }
             node.view = view;
             node.layout = this.layout;
+            node.final = parseInt(partKey) + 1 === parts.length
         }
     }
 
@@ -48,7 +51,8 @@ export default class Router {
             normalNodes: {},
             paramNodes: {},
             layout: null,
-            view: null
+            view: null,
+            final: false,
         }
     }
 
@@ -58,7 +62,8 @@ export default class Router {
             regex: null,
             paramNodes: {},
             layout: null,
-            view: null
+            view: null,
+            final: false,
         }
     }
 
@@ -68,8 +73,10 @@ export default class Router {
         if (window.location.pathname === '/') {
             parts = ['/'];
         }
+
         let partsCount = parts.length;
         let foundCount = 0;
+
         for (let part in parts) {
             part = parts[part];
             if (!node.normalNodes[part]) {
@@ -89,7 +96,7 @@ export default class Router {
                 foundCount++;
             }
         }
-        if (partsCount > foundCount) {
+        if (partsCount > foundCount || !node.final) {
             __JUST_SUGAR__.throwError('no_matched_route', `No route could be matched. Make sure the route for ${window.location.pathname} exists`, window.location.pathname);
             return null;
         } else {
