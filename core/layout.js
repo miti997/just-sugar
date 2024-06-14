@@ -22,7 +22,7 @@ export default class Layout extends SugarCube {
 
     async rerender() {
         try {
-            let wrapper = document.querySelector(`#sc_${viewId}`);
+            let wrapper = document.querySelector(`#sc_${this.viewId}`);
             let module = await import(`/src/views/${this.viewName}.js`);
             wrapper.innerHTML = new module.default(...__JUST_SUGAR__.viewParams).render();
         } catch (e) {
