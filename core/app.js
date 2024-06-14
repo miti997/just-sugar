@@ -41,6 +41,9 @@ export default class APP {
     }
 
     async matchRoute() {
+        this.error = false;
+        this.errorDetails = null;
+
         let matchedRoute = this.routes.matchRoute();
         if (matchedRoute === null) {
             return;
