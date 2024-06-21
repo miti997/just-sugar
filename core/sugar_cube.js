@@ -1,7 +1,8 @@
 export default class SugarCube {
     eventCounter = 0;
     components = [];
-    wrapperElement = 'div'
+    wrapperElement = 'div';
+    nestedCSS = true;
     constructor(id = null) {
         if (id === null || id === '') {
             this.generateId();
@@ -13,7 +14,11 @@ export default class SugarCube {
     render() {
         let style = this.style();
         if (style !== '') {
-            style = `<style>#${this.id} {${style}}</style>`
+            if  (this.nestedCSS) {
+                style = `<style>#${this.id} {${style}}</style>`;
+            } else {
+                style = `<style>${style}</style>`;
+            }
         }
 
         return /*html*/`<${this.wrapperElement} id=${this.id}>${style}${this.template()}</${this.wrapperElement}>`;
