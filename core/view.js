@@ -2,6 +2,7 @@ import SugarCube from './sugar_cube.js';
 export default class View extends SugarCube {
     type = 'view';
     wrapperElement = 'main';
+    nestedCSS = true;
 
     constructor() {
         super('view');
@@ -21,7 +22,11 @@ export default class View extends SugarCube {
         let wrapper = document.querySelector(`#${this.id}`);
         let style = this.style();
         if (style !== '') {
-            style = `<style>#${this.id} {${style}}</style>`
+            if  (this.nestedCSS) {
+                style = `<style>#${this.id} {${style}}</style>`;
+            } else {
+                style = `<style>${style}</style>`;
+            }
         }
         wrapper.innerHTML = style + this.template();
         __JUST_SUGAR__.view = this.makeProxy();
